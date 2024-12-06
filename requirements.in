@@ -1,0 +1,15 @@
+scikit-learn
+optbinning
+pandas
+openpyxl
+numpy
+matplotlib
+shap
+numpyencoder
+argparse
+rich
+typer
+mlflow
+jupyter
+optbinning
+tableone

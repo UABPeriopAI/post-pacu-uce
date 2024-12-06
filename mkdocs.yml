@@ -1,0 +1,19 @@
+# mkdocs.yml
+site_name: Post-pacu escalation prediction
+site_url: https://sites.uab.edu/periop-datascience/
+repo_url: https://github.com/UABPeriopAI/post-pacu-uce
+nav:
+  - Home: index.md
+  - workflows:
+    - main: postpacu/main.md
+  - postpacu:
+    - data: postpacu/data.md
+    - evaluate: postpacu/evaluate.md
+    - predict: postpacu/predict.md
+    - train: postpacu/train.md
+    - utils: postpacu/utils.md
+theme: readthedocs
+plugins:
+  - mkdocstrings
+watch:
+  - .  # reload docs for any file changes
