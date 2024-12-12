@@ -185,8 +185,8 @@ flake8 src/
 ```
 
 ### Building Documentation
-
-*Documentation guidelines and generation scripts go here, if applicable.*
+The code documentation for this project was automatically created with mkdocs and is available via github-pages:
+[https://uabperiopai.github.io/post-pacu-uce/](https://uabperiopai.github.io/post-pacu-uce/)
 
 ## Contributing
 

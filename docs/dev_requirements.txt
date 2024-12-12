@@ -18,3 +18,5 @@ mlflow
 jupyter
 optbinning
 tableone
+#TO get mkdocs documentation to work properly
+mkdocstrings[crystal,python]
