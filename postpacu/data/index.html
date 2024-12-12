@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://sites.uab.edu/periop-datascience/postpacu/data/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>data - Post-pacu escalation prediction</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "data";
+        var mkdocs_page_input_path = "postpacu/data.md";
+        var mkdocs_page_url = "/periop-datascience/postpacu/data/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Post-pacu escalation prediction
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">workflows</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../main/">main</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">postpacu</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">data</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../evaluate/">evaluate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../train/">train</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../utils/">utils</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Post-pacu escalation prediction</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">postpacu</li>
+      <li class="breadcrumb-item active">data</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/UABPeriopAI/post-pacu-uce/edit/master/docs/postpacu/data.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <div class="doc doc-object doc-module">
+
+
+
+<a id="postpacu.data"></a>
+    <div class="doc doc-contents first">
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="postpacu.data.get_data_splits" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_data_splits</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_frac</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>It splits the data into training and test sets, and returns the four resulting arrays</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>X</code></b>
+              –
+              <div class="doc-md-description">
+                <p>The data to split</p>
+              </div>
+            </li>
+            <li>
+              <b><code>y</code></b>
+              –
+              <div class="doc-md-description">
+                <p>The target variable.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>test_frac</code></b>
+              –
+              <div class="doc-md-description">
+                <p>The fraction of the data that should be in the test set.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>seed</code></b>
+              –
+              <div class="doc-md-description">
+                <p>The random seed to use when shuffling the data. Defaults to 42</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              –
+              <div class="doc-md-description">
+                <p>X_train, X_test, y_train, y_test</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>postpacu/data.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_data_splits</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_frac</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    It splits the data into training and test sets, and returns the four resulting arrays</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      X: The data to split</span>
+<span class="sd">      y: The target variable.</span>
+<span class="sd">      test_frac: The fraction of the data that should be in the test set.</span>
+<span class="sd">      seed: The random seed to use when shuffling the data. Defaults to 42</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      X_train, X_test, y_train, y_test</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="n">test_frac</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="postpacu.data.preprocess" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">preprocess</span><span class="p">(</span><span class="n">r_cleaned_data</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>It takes in the path to the data that has already been cleaned by R, and returns the X and y
+matrices that are ready to be used in the model</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>r_cleaned_data</code></b>
+              –
+              <div class="doc-md-description">
+                <p>the path to the R-cleaned data.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              –
+              <div class="doc-md-description">
+                <p>X is a dataframe of the features, y is a dataframe of the labels.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>postpacu/data.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">r_cleaned_data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    It takes in the path to the data that has already been cleaned by R, and returns the X and y</span>
+<span class="sd">    matrices that are ready to be used in the model</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      r_cleaned_data: the path to the R-cleaned data.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      X is a dataframe of the features, y is a dataframe of the labels.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Assuming data.r_clean_data() has already been run on most recent data.&quot;</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">py_clean_data</span><span class="p">(</span><span class="n">data_path</span><span class="o">=</span><span class="n">r_cleaned_data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="postpacu.data.py_clean_data" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">py_clean_data</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>We read in the data, remove some variables, and return the X and y dataframes</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>data_path</code></b>
+                  (<code><span title="pathlib.Path">Path</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Path =</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>        <p>Path('/Users/joshua/Documents/GitHub/scorecard_modeling/data/data_for_scorecard.csv')</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              –
+              <div class="doc-md-description">
+                <p>X and y</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>postpacu/data.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">py_clean_data</span><span class="p">(</span><span class="n">data_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    We read in the data, remove some variables, and return the X and y dataframes</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      data_path (Path): Path =</span>
+<span class="sd">    Path(&#39;/Users/joshua/Documents/GitHub/scorecard_modeling/data/data_for_scorecard.csv&#39;)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      X and y</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data_for_scorecard</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
+    <span class="c1"># if surgical specialty is a number, mark it as NA</span>
+    <span class="n">data_for_scorecard</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="n">data_for_scorecard</span><span class="o">.</span><span class="n">SurgicalSpecialty</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span>
+        <span class="o">|</span> <span class="n">data_for_scorecard</span><span class="o">.</span><span class="n">SurgicalSpecialty</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span>
+        <span class="s2">&quot;SurgicalSpecialty&quot;</span><span class="p">,</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">NA</span>
+    <span class="c1"># remove some variables per 3/14 modeling meeting</span>
+    <span class="n">y_MET</span> <span class="o">=</span> <span class="n">data_for_scorecard</span><span class="p">[</span><span class="s2">&quot;MET_Team&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="n">y_ICU</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">data_for_scorecard</span><span class="p">[</span><span class="s2">&quot;ICUafterPACU_Days&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data_for_scorecard</span><span class="p">[</span><span class="s2">&quot;ICU_Bed_Order&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">data_for_scorecard</span><span class="p">[</span><span class="s2">&quot;ICU_AfterStepDown_NoOrderBeforePacuDepart_Days&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">y_stepdown</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">data_for_scorecard</span><span class="p">[</span><span class="s2">&quot;StepDownUnitAfterGeneralCareTime_Days&quot;</span><span class="p">])</span>
+    <span class="n">data_for_scorecard</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="s2">&quot;SurgicalSpecialty&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;LastPACU_HR&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;LastPACU_SBP&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;LastPACU_RR&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;LastPACU_PainScore&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;LastPACU_Aldrete&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;SchedRecAnesType&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Urine&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;NaCl&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;LR&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;PreOpGlucose&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;PreOpHematocrit&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;PostOpGlucose&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;MinPACUTemp&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;MaxPACUTemp&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;LastSpO2lte92&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;LastSBPlte100&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;LastSBPgte100&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;LastPaingte5&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;anes_duration&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;procedure_duration&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;LastO2Flowgt2&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;LastHRgte90&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;LastMAPlte60&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;LastMAPgte85&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;LastRRgte20&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;CurrentSmoker&quot;</span><span class="p">,</span>  <span class="c1"># counterintuitive results</span>
+            <span class="s2">&quot;Total_BloodProducts&quot;</span><span class="p">,</span>  <span class="c1"># duplicate</span>
+            <span class="s2">&quot;ICU_AfterStepDown_NoOrderBeforePacuDepart_Days&quot;</span><span class="p">,</span>  <span class="c1"># part of response</span>
+            <span class="s2">&quot;MET_Team&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ICUafterPACU_Days&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ICU_Bed_Order&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;StepDownUnitAfterGeneralCareTime_Days&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ICU_AfterStepDown_NoOrderBeforePacuDepart&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+        <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">data_for_scorecard</span><span class="p">[</span><span class="s2">&quot;escalation&quot;</span><span class="p">]</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">data_for_scorecard</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;escalation&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">other_escalations</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">{</span><span class="s2">&quot;pt_idx&quot;</span><span class="p">:</span> <span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s2">&quot;MET&quot;</span><span class="p">:</span> <span class="n">y_MET</span><span class="p">,</span> <span class="s2">&quot;ICU&quot;</span><span class="p">:</span> <span class="n">y_ICU</span><span class="p">,</span> <span class="s2">&quot;stepdown&quot;</span><span class="p">:</span> <span class="n">y_stepdown</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">other_escalations</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">INTERMEDIATE_DATA</span><span class="p">,</span> <span class="s2">&quot;other_escalations.csv&quot;</span><span class="p">))</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Other escalation types saved to intermediate data path.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="postpacu.data.r_clean_data" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">r_clean_data</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">config</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>It runs an R script that cleans the raw data and saves it to the <code>ALT_MODEL_DATA</code> and
+<code>SCORECARD_DATA</code> directories</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>configuration</code></b>
+              –
+              <div class="doc-md-description">
+                <p>the configuration object, which is the default config.py file</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>postpacu/data.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">r_clean_data</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">config</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    It runs an R script that cleans the raw data and saves it to the `ALT_MODEL_DATA` and</span>
+<span class="sd">    `SCORECARD_DATA` directories</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      configuration: the configuration object, which is the default config.py file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># this is so specific to this project,</span>
+    <span class="c1"># I think it&#39;s ok to just have the input be &quot;config&quot;</span>
+    <span class="n">rscript_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">configuration</span><span class="o">.</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s2">&quot;postpacu/preprocess_data.R&quot;</span><span class="p">)</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="s2">&quot;/usr/bin/Rscript&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;--vanilla&quot;</span><span class="p">,</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">rscript_path</span><span class="o">.</span><span class="n">absolute</span><span class="p">()),</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">configuration</span><span class="o">.</span><span class="n">RAW_DATA</span><span class="o">.</span><span class="n">absolute</span><span class="p">()),</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">configuration</span><span class="o">.</span><span class="n">ALT_MODEL_DATA</span><span class="o">.</span><span class="n">absolute</span><span class="p">()),</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">configuration</span><span class="o">.</span><span class="n">SCORECARD_DATA</span><span class="o">.</span><span class="n">absolute</span><span class="p">()),</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">configuration</span><span class="o">.</span><span class="n">ALT_MODEL_MISSINGNESS</span><span class="o">.</span><span class="n">absolute</span><span class="p">()),</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">configuration</span><span class="o">.</span><span class="n">SCORECARD_MISSINGNESS</span><span class="o">.</span><span class="n">absolute</span><span class="p">()),</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;✅ Saved data cleaned with R!&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../main/" class="btn btn-neutral float-left" title="main"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../evaluate/" class="btn btn-neutral float-right" title="evaluate">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/UABPeriopAI/post-pacu-uce" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../main/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../evaluate/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
