@@ -9,7 +9,6 @@ nav:
   - postpacu:
     - data: postpacu/data.md
     - evaluate: postpacu/evaluate.md
-    - predict: postpacu/predict.md
     - train: postpacu/train.md
     - utils: postpacu/utils.md
 theme: readthedocs

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://sites.uab.edu/periop-datascience/data_dictionary/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Data Dictionary for Perioperative Variables Used in the Scorecard Model - Post-pacu escalation prediction</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Data Dictionary for Perioperative Variables Used in the Scorecard Model";
+        var mkdocs_page_input_path = "data_dictionary.md";
+        var mkdocs_page_url = "/periop-datascience/data_dictionary/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Post-pacu escalation prediction
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">workflows</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../postpacu/main/">main</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">postpacu</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../postpacu/data/">data</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../postpacu/evaluate/">evaluate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../postpacu/train/">train</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../postpacu/utils/">utils</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Post-pacu escalation prediction</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Data Dictionary for Perioperative Variables Used in the Scorecard Model</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/UABPeriopAI/post-pacu-uce/edit/master/docs/data_dictionary.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="data-dictionary-for-perioperative-variables-used-in-the-scorecard-model">Data Dictionary for Perioperative Variables Used in the Scorecard Model</h1>
+<p>The following is a data dictionary for the 66 variables used in the scorecard model predicting unplanned care escalations (UCE) for post-anesthesia care unit (PACU) patients during the perioperative period. Each variable includes its name, type, units (if applicable), description, possible values (for categorical variables), and any relevant notes.</p>
+<hr />
+<h1 id="responsedependent-variable">Response/Dependent variable</h1>
+<p><strong>Variable: escalation</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates whether the patient experienced an unexpected escalation of care within 3 midnights after PACU discharge.</li>
+<li><strong>Possible Values</strong>:</li>
+<li><code>True</code> (Yes): The patient had an unexpected escalation of care.</li>
+<li><code>False</code> (No): The patient did not have an unexpected escalation of care.</li>
+</ul>
+<hr />
+<h3 id="definition-of-escalation">Definition of Escalation:</h3>
+<p>An <strong>unexpected escalation of care</strong> is defined as any of the following events occurring within 3 midnights after discharge from the Post-Anesthesia Care Unit (PACU):</p>
+<ol>
+<li><strong>Medical Emergency Team (MET) Activation</strong>:</li>
+<li>The patient required intervention by the MET due to acute clinical deterioration.</li>
+<li>
+<p><strong>Indicator</strong>: <code>MET_Team == 1</code></p>
+</li>
+<li>
+<p><strong>Unplanned ICU Admission Without Prior Order</strong>:</p>
+</li>
+<li>The patient was transferred from a general inpatient floor to an Intensive Care Unit (ICU) without a pre-existing ICU bed order before PACU discharge.</li>
+<li>
+<p><strong>Indicator</strong>:</p>
+<ul>
+<li><code>ICUafterPACU_Days == 1</code> <strong>AND</strong></li>
+<li><code>ICU_Bed_Order == 0</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Admission to Step-Down Unit After General Floor</strong>:</p>
+</li>
+<li>The patient was initially admitted to a general inpatient floor and then unexpectedly transferred to a step-down or intermediate care unit.</li>
+<li>
+<p><strong>Indicator</strong>: <code>StepDownUnitAfterGeneralCareTime_Days</code> is <strong>not</strong> missing (<code>not NA</code>)</p>
+</li>
+<li>
+<p><strong>ICU Transfer from Step-Down Unit Without Prior Order</strong>:</p>
+</li>
+<li>The patient was transferred from a step-down/intermediate care unit to an ICU without a prior ICU bed order before PACU discharge.</li>
+<li><strong>Indicator</strong>: <code>ICU_AfterStepDown_NoOrderBeforePacuDepart_Days == 1</code></li>
+</ol>
+<hr />
+<h3 id="notes">Notes:</h3>
+<ul>
+<li><strong>Timeframe</strong>:</li>
+<li>The escalation must occur within <strong>3 midnights</strong> after PACU discharge.</li>
+<li>
+<p>The 3-midnights period is used because the risk of postoperative complications, such as major adverse cardiac events (MACE), significantly decreases after this period.</p>
+</li>
+<li>
+<p><strong>Unexpected Nature</strong>:</p>
+</li>
+<li>Escalations are considered <strong>unexpected</strong> if they occur without prior planning or orders placed before the patient left the PACU.</li>
+<li>
+<p>Planned admissions to higher levels of care (e.g., scheduled ICU admission) are <strong>not</strong> counted as unexpected escalations.</p>
+</li>
+<li>
+<p><strong>Aggregated Variable</strong>:</p>
+</li>
+<li>The <code>escalation</code> variable combines several indicators of patient deterioration requiring higher acuity care.</li>
+<li>
+<p>It captures a range of events that signify an unanticipated need for increased monitoring or interventions.</p>
+</li>
+<li>
+<p><strong>Clinical Relevance</strong>:</p>
+</li>
+<li>Identifying unexpected escalations helps in assessing the quality of perioperative care and predicting patients at risk for deterioration.</li>
+<li>Understanding factors associated with escalations can guide interventions to improve patient safety.</li>
+</ul>
+<hr />
+<h3 id="related-variables-and-indicators">Related Variables and Indicators:</h3>
+<ul>
+<li><strong>MET_Team</strong>:</li>
+<li><strong>Type</strong>: Boolean</li>
+<li>
+<p><strong>Description</strong>: Indicates if the MET was activated for the patient within the specified timeframe.</p>
+</li>
+<li>
+<p><strong>ICUafterPACU_Days</strong>:</p>
+</li>
+<li><strong>Type</strong>: Boolean</li>
+<li>
+<p><strong>Description</strong>: Indicates if the patient was admitted to the ICU after PACU discharge within 3 midnights.</p>
+</li>
+<li>
+<p><strong>ICU_Bed_Order</strong>:</p>
+</li>
+<li><strong>Type</strong>: Boolean</li>
+<li>
+<p><strong>Description</strong>: Indicates if there was an ICU bed order placed before PACU discharge.</p>
+</li>
+<li>
+<p><strong>StepDownUnitAfterGeneralCareTime_Days</strong>:</p>
+</li>
+<li><strong>Type</strong>: DateTime or Indicator</li>
+<li>
+<p><strong>Description</strong>: Timestamp of transfer to a step-down unit after initial admission to a general floor.</p>
+</li>
+<li>
+<p><strong>ICU_AfterStepDown_NoOrderBeforePacuDepart_Days</strong>:</p>
+</li>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if the patient was transferred from a step-down unit to ICU without a prior ICU bed order.</li>
+</ul>
+<hr />
+<h3 id="data-handling">Data Handling:</h3>
+<ul>
+<li><strong>Calculation in Data Processing</strong>:</li>
+<li>
+<p>The <code>escalation</code> variable is calculated during data preprocessing using the following logic:</p>
+<p><code>python
+escalation = (
+    (MET_Team == 1) |
+    ((ICUafterPACU_Days == 1) &amp; (ICU_Bed_Order == 0)) |
+    (StepDownUnitAfterGeneralCareTime_Days is not NA) |
+    (ICU_AfterStepDown_NoOrderBeforePacuDepart_Days == 1)
+)</code></p>
+</li>
+<li>
+<p><strong>Missing Data</strong>:</p>
+</li>
+<li>Care is taken to handle missing values appropriately.</li>
+<li>If certain indicators are missing, the logic ensures that only available data contribute to determining if an escalation occurred.</li>
+</ul>
+<hr />
+<h3 id="importance-in-the-model">Importance in the Model:</h3>
+<ul>
+<li>The <code>escalation</code> variable serves as the <strong>response variable</strong> (dependent variable) in the predictive model.</li>
+<li>It represents the outcome that the model aims to predict based on various perioperative factors.</li>
+<li>Understanding and accurately defining this variable is crucial for model training, validation, and interpretation.</li>
+</ul>
+<hr />
+<h3 id="contextual-background">Contextual Background:</h3>
+<ul>
+<li><strong>Unplanned Care Escalations (UCE)</strong>:</li>
+<li>UCEs are significant events that can increase patient morbidity, prolong hospital stays, and escalate healthcare costs.</li>
+<li>
+<p>Early prediction of UCE risk allows clinicians to make informed decisions regarding patient monitoring, intervention, and resource allocation.</p>
+</li>
+<li>
+<p><strong>Clinical Significance</strong>:</p>
+</li>
+<li>By analyzing factors associated with <code>escalation</code>, healthcare providers can identify at-risk patients and implement strategies to mitigate adverse events.</li>
+</ul>
+<hr />
+<h3 id="usage-considerations">Usage Considerations:</h3>
+<ul>
+<li><strong>For Collaborators</strong>:</li>
+<li>When reproducing the model, ensure that the <code>escalation</code> variable is derived using the exact definitions and logic provided.</li>
+<li>
+<p>Consistent application of this definition is essential for the validity and comparability of the predictive model.</p>
+</li>
+<li>
+<p><strong>Data Integrity</strong>:</p>
+</li>
+<li>Verify that all contributing indicators (<code>MET_Team</code>, <code>ICUafterPACU_Days</code>, etc.) are accurately recorded and timestamped.</li>
+<li>Timeframes should be computed based on standardized date and time formats to ensure consistency.</li>
+</ul>
+<hr />
+<h1 id="explanatoryindependent-variables">Explanatory/Independent variables</h1>
+<p><strong>Variable 0: Gender</strong></p>
+<ul>
+<li><strong>Type</strong>: Categorical (String)</li>
+<li><strong>Description</strong>: Patient's self-reported gender at the time of surgery.</li>
+<li><strong>Possible Values</strong>: 'Female', 'Male', 'Undetermined'</li>
+</ul>
+<hr />
+<p><strong>Variable 1: Age</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Integer)</li>
+<li><strong>Units</strong>: Years</li>
+<li><strong>Description</strong>: Patient's age at the time of surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 2: BMI</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: kg/m²</li>
+<li><strong>Description</strong>: Patient's Body Mass Index (BMI).</li>
+</ul>
+<hr />
+<p><strong>Variable 3: Race</strong></p>
+<ul>
+<li><strong>Type</strong>: Categorical (String)</li>
+<li><strong>Description</strong>: Patient's self-reported race.</li>
+<li><strong>Possible Values</strong>:</li>
+<li>'American Indian or Alaska Native'</li>
+<li>'Asian'</li>
+<li>'African American'</li>
+<li>'Hispanic or Latino'</li>
+<li>'Multiple'</li>
+<li>'Native Hawaiian/Other Pacific Islander'</li>
+<li>'Other'</li>
+<li>'Unknown'</li>
+<li>'Caucasian'</li>
+</ul>
+<hr />
+<p><strong>Variable 4: Ethnicity</strong></p>
+<ul>
+<li><strong>Type</strong>: Categorical (String)</li>
+<li><strong>Description</strong>: Patient's self-reported ethnicity.</li>
+<li><strong>Possible Values</strong>:</li>
+<li>'Hispanic/Latino'</li>
+<li>'Multiple'</li>
+<li>'Non-Hispanic/Latino'</li>
+<li>'Not reported'</li>
+</ul>
+<hr />
+<p><strong>Variable 5: MinPACULastHour_SpO2</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Percentage (%)</li>
+<li><strong>Description</strong>: Minimum oxygen saturation (SpO₂) recorded during the last hour before PACU discharge.</li>
+</ul>
+<hr />
+<p><strong>Variable 6: LastPACU_SpO2</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Percentage (%)</li>
+<li><strong>Description</strong>: Last oxygen saturation (SpO₂) value recorded before PACU discharge.</li>
+</ul>
+<hr />
+<p><strong>Variable 7: MaxPACULastHour_O2FlowRate</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Liters per minute (L/min)</li>
+<li><strong>Description</strong>: Maximum oxygen flow rate administered during the last hour before PACU discharge.</li>
+</ul>
+<hr />
+<p><strong>Variable 8: LastPACU_O2FlowRate</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Liters per minute (L/min)</li>
+<li><strong>Description</strong>: Oxygen flow rate administered at the time of PACU discharge.</li>
+</ul>
+<hr />
+<p><strong>Variable 9: MaxPACULastHour_HR</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Beats per minute (bpm)</li>
+<li><strong>Description</strong>: Maximum heart rate recorded during the last hour before PACU discharge.</li>
+</ul>
+<hr />
+<p><strong>Variable 10: MinPACULastHour_SBP</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Millimeters of mercury (mmHg)</li>
+<li><strong>Description</strong>: Minimum systolic blood pressure recorded during the last hour before PACU discharge.</li>
+</ul>
+<hr />
+<p><strong>Variable 11: MaxPACULastHour_SBP</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: mmHg</li>
+<li><strong>Description</strong>: Maximum systolic blood pressure recorded during the last hour before PACU discharge.</li>
+</ul>
+<hr />
+<p><strong>Variable 12: MinPACULastHour_MAP</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: mmHg</li>
+<li><strong>Description</strong>: Minimum mean arterial pressure recorded during the last hour before PACU discharge.</li>
+</ul>
+<hr />
+<p><strong>Variable 13: MaxPACULastHour_MAP</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: mmHg</li>
+<li><strong>Description</strong>: Maximum mean arterial pressure recorded during the last hour before PACU discharge.</li>
+</ul>
+<hr />
+<p><strong>Variable 14: LastPACU_MAP</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: mmHg</li>
+<li><strong>Description</strong>: Last mean arterial pressure recorded before PACU discharge.</li>
+</ul>
+<hr />
+<p><strong>Variable 15: MaxPACULastHour_RR</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Breaths per minute</li>
+<li><strong>Description</strong>: Maximum respiratory rate recorded during the last hour before PACU discharge.</li>
+</ul>
+<hr />
+<p><strong>Variable 16: MaxPACULastHour_PainScore</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Integer)</li>
+<li><strong>Description</strong>: Maximum pain score recorded during the last hour before PACU discharge.</li>
+<li><strong>Scale</strong>: 0 (no pain) to 10 (worst possible pain)</li>
+</ul>
+<hr />
+<p><strong>Variable 17: MinPACULastHour_Aldrete</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Integer)</li>
+<li><strong>Description</strong>: Minimum Aldrete score recorded during the last hour before PACU discharge.</li>
+<li><strong>Scale</strong>: 0 to 10</li>
+<li><strong>Notes</strong>: The Aldrete score assesses patient recovery from anesthesia based on activity, respiration, circulation, consciousness, and oxygen saturation.</li>
+</ul>
+<hr />
+<p><strong>Variable 18: CKD</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if the patient had a diagnosis of Chronic Kidney Disease prior to surgery.</li>
+<li><strong>Possible Values</strong>: <code>True</code> (Yes), <code>False</code> (No)</li>
+</ul>
+<hr />
+<p><strong>Variable 19: AKI</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if the patient had a diagnosis of Acute Kidney Injury prior to surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 20: AlbuminLevel</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Grams per deciliter (g/dL)</li>
+<li><strong>Description</strong>: Preoperative serum albumin level.</li>
+</ul>
+<hr />
+<p><strong>Variable 21: OpioidAbuseDiagnosis</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if the patient had a diagnosis of opioid abuse.</li>
+</ul>
+<hr />
+<p><strong>Variable 22: SleepApneaDiagnosis</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if the patient had a diagnosis of sleep apnea.</li>
+</ul>
+<hr />
+<p><strong>Variable 23: AlcoholUseDiagnosis</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if the patient had a diagnosis related to alcohol use or abuse.</li>
+</ul>
+<hr />
+<p><strong>Variable 24: ESRDfromProblemList</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if End-Stage Renal Disease was listed in the patient's problem list.</li>
+</ul>
+<hr />
+<p><strong>Variable 25: COPDfromProblemList</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if Chronic Obstructive Pulmonary Disease was listed in the patient's problem list.</li>
+</ul>
+<hr />
+<p><strong>Variable 26: AsthmafromProblemList</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if asthma was listed in the patient's problem list.</li>
+</ul>
+<hr />
+<p><strong>Variable 27: DiabetesfromProblemList</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if diabetes was listed in the patient's problem list.</li>
+</ul>
+<hr />
+<p><strong>Variable 28: MACE_Score</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Description</strong>: Major Adverse Cardiac Events score estimating the patient's risk for cardiac complications.</li>
+<li><strong>Notes</strong>: Higher scores indicate greater risk.</li>
+</ul>
+<hr />
+<p><strong>Variable 29: EBL</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Milliliters (mL)</li>
+<li><strong>Description</strong>: Estimated blood loss during the surgical procedure.</li>
+</ul>
+<hr />
+<p><strong>Variable 30: SugammadexAmount</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Milligrams (mg)</li>
+<li><strong>Description</strong>: Total dose of Sugammadex administered during surgery.</li>
+<li><strong>Notes</strong>: Sugammadex is a medication used to reverse neuromuscular blockade.</li>
+</ul>
+<hr />
+<p><strong>Variable 31: NeostigmineAmount</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Milligrams (mg)</li>
+<li><strong>Description</strong>: Total dose of Neostigmine administered during surgery.</li>
+<li><strong>Notes</strong>: Neostigmine is another medication used to reverse neuromuscular blockade.</li>
+</ul>
+<hr />
+<p><strong>Variable 32: RBCs</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Units or Milliliters (mL)</li>
+<li><strong>Description</strong>: Amount of red blood cell transfusions administered during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 33: WholeBlood</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Units or mL</li>
+<li><strong>Description</strong>: Amount of whole blood transfusions administered during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 34: FFP</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Units or mL</li>
+<li><strong>Description</strong>: Amount of Fresh Frozen Plasma transfused during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 35: Cryo</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Units or mL</li>
+<li><strong>Description</strong>: Amount of Cryoprecipitate transfused during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 36: Platelets</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Units or mL</li>
+<li><strong>Description</strong>: Amount of platelets transfused during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 37: CellSaver</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: mL</li>
+<li><strong>Description</strong>: Volume of autologous blood returned to the patient using cell saver technology during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 38: D5and10</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: mL</li>
+<li><strong>Description</strong>: Volume of Dextrose 5% and Dextrose 10% intravenous fluids administered during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 39: Normosol</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: mL</li>
+<li><strong>Description</strong>: Volume of Normosol intravenous fluids administered during surgery.</li>
+<li><strong>Notes</strong>: Normosol is a balanced electrolyte solution.</li>
+</ul>
+<hr />
+<p><strong>Variable 40: Albumin</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: mL</li>
+<li><strong>Description</strong>: Volume of albumin solution administered during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 41: Starches</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: mL</li>
+<li><strong>Description</strong>: Volume of starch-based colloids administered during surgery.</li>
+<li><strong>Notes</strong>: Includes solutions like hydroxyethyl starch.</li>
+</ul>
+<hr />
+<p><strong>Variable 42: Isolyte</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: mL</li>
+<li><strong>Description</strong>: Volume of Isolyte intravenous fluids administered during surgery.</li>
+<li><strong>Notes</strong>: Isolyte is an isotonic, balanced electrolyte solution.</li>
+</ul>
+<hr />
+<p><strong>Variable 43: Dextran</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: mL</li>
+<li><strong>Description</strong>: Volume of Dextran solution administered during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 44: Epidural</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if an epidural procedure was performed during anesthesia care.</li>
+</ul>
+<hr />
+<p><strong>Variable 45: EpinephrineInfusion</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if an epinephrine infusion was administered during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 46: VasopressinInfusion</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if a vasopressin infusion was administered during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 47: MilrinoneInfusion</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if a milrinone infusion was administered during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 48: DobutamineInfusion</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if a dobutamine infusion was administered during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 49: DopamineInfusion</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if a dopamine infusion was administered during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 50: NorepinephrineInfusion</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if a norepinephrine infusion was administered during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 51: PhenylephrineInfusion</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if a phenylephrine infusion was administered during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 52: BloodProductsTotal</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Units or mL</li>
+<li><strong>Description</strong>: Total amount of blood products (RBCs, Whole Blood, FFP, Cryo, Platelets) administered during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 53: CrystalloidsTotal</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: mL</li>
+<li><strong>Description</strong>: Total volume of crystalloid solutions administered during surgery.</li>
+<li><strong>Notes</strong>: Includes solutions like Normal Saline (NaCl), Lactated Ringer's (LR), Normosol, Isolyte, Dextrose solutions, etc.</li>
+</ul>
+<hr />
+<p><strong>Variable 54: EMERGENCY</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if the surgery was classified as an emergency case.</li>
+</ul>
+<hr />
+<p><strong>Variable 55: CVL</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if a central venous line (central line) was placed during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 56: ArtLine</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if an arterial line was placed during surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 57: PreOpBicarb</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Milliequivalents per liter (mEq/L)</li>
+<li><strong>Description</strong>: Preoperative bicarbonate level from labs collected before surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 58: PreOpHemoglobin</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Grams per deciliter (g/dL)</li>
+<li><strong>Description</strong>: Preoperative hemoglobin level from labs collected before surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 59: PreOpPlatelets</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Thousands per microliter (×10³/µL)</li>
+<li><strong>Description</strong>: Preoperative platelet count from labs collected before surgery.</li>
+</ul>
+<hr />
+<p><strong>Variable 60: LastPACU_Temp</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Degrees Fahrenheit (°F)</li>
+<li><strong>Description</strong>: Last recorded temperature before PACU discharge.</li>
+</ul>
+<hr />
+<p><strong>Variable 61: PACU_Urine_mL</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Milliliters (mL)</li>
+<li><strong>Description</strong>: Total urine output measured during the PACU stay.</li>
+</ul>
+<hr />
+<p><strong>Variable 62: Total_NonBloodFluids</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: mL</li>
+<li><strong>Description</strong>: Total volume of non-blood fluids administered during surgery.</li>
+<li><strong>Notes</strong>: Includes crystalloids and colloids such as D5W, Normal Saline, Lactated Ringer's, Albumin, etc.</li>
+</ul>
+<hr />
+<p><strong>Variable 63: ASAStatus</strong></p>
+<ul>
+<li><strong>Type</strong>: Categorical (Integer)</li>
+<li><strong>Description</strong>: American Society of Anesthesiologists (ASA) physical status classification score assigned before surgery.</li>
+<li><strong>Possible Values</strong>:</li>
+<li>1: Normal healthy patient</li>
+<li>2: Patient with mild systemic disease</li>
+<li>3: Patient with severe systemic disease</li>
+<li>4: Patient with severe systemic disease that is a constant threat to life</li>
+<li>5: Moribund patient who is not expected to survive without the operation</li>
+<li>6: Declared brain-dead patient whose organs are being removed for donor purposes</li>
+</ul>
+<hr />
+<p><strong>Variable 64: RoomAir</strong></p>
+<ul>
+<li><strong>Type</strong>: Boolean</li>
+<li><strong>Description</strong>: Indicates if the patient was breathing room air (not receiving supplemental oxygen) at the time of PACU discharge.</li>
+</ul>
+<hr />
+<p><strong>Variable 65: anes_surgical_duration_diff</strong></p>
+<ul>
+<li><strong>Type</strong>: Numeric (Float)</li>
+<li><strong>Units</strong>: Minutes</li>
+<li><strong>Description</strong>: Difference between total anesthesia time and surgical procedure time.</li>
+<li><strong>Calculation</strong>: <code>Anesthesia Duration - Procedure Duration</code></li>
+<li><strong>Notes</strong>: Represents non-surgical anesthesia time, potentially accounting for procedures like line placements, airway management, or delays.</li>
+</ul>
+<hr />
+<h3 id="general-notes">General Notes:</h3>
+<ul>
+<li><strong>Boolean Variables</strong>: Represented as <code>True</code> (Yes) or <code>False</code> (No).</li>
+<li><strong>Numeric Variables</strong>: Missing values may be represented as <code>NA</code> or might be handled specially in the analysis.</li>
+<li><strong>Units</strong>: Units are specified where applicable. Consistent units should be used throughout the dataset.</li>
+<li><strong>Time Variables</strong>: Durations are calculated in minutes to ensure consistency.</li>
+<li><strong>Data Sources</strong>: Variables are derived from electronic medical records, including clinical events, labs, medications administered, and problem lists.</li>
+<li><strong>Variable Handling</strong>: Some variables may have special considerations in data processing, such as handling missing values or combining related variables.</li>
+</ul>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/UABPeriopAI/post-pacu-uce" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

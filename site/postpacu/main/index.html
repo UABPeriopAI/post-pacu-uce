@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://sites.uab.edu/periop-datascience/postpacu/main/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>main - Post-pacu escalation prediction</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "main";
+        var mkdocs_page_input_path = "postpacu/main.md";
+        var mkdocs_page_url = "/periop-datascience/postpacu/main/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Post-pacu escalation prediction
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">workflows</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">main</a>
+    <ul class="current">
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">postpacu</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../data/">data</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../evaluate/">evaluate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../train/">train</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../utils/">utils</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Post-pacu escalation prediction</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">workflows</li>
+      <li class="breadcrumb-item active">main</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/UABPeriopAI/post-pacu-uce/edit/master/docs/postpacu/main.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <div class="doc doc-object doc-module">
+
+
+
+<a id="postpacu.main"></a>
+    <div class="doc doc-contents first">
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="postpacu.main.evaluate_model" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">evaluate_model</span><span class="p">(</span><span class="n">run_id</span><span class="p">,</span> <span class="n">args_fp</span><span class="o">=</span><span class="s1">&#39;config/args.json&#39;</span><span class="p">,</span> <span class="n">experiment_name</span><span class="o">=</span><span class="s1">&#39;current candidate&#39;</span><span class="p">,</span> <span class="n">run_name</span><span class="o">=</span><span class="s1">&#39;3-day evaluation&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>It loads the model and data, and then evaluates the model on the data</p>
+<p>:param run_id: The run_id of the model you want to evaluate
+:param experiment_name: The name of the experiment you want to evaluate, defaults to current
+candidate
+:type experiment_name: str (optional)
+:param run_name: The name of the run, defaults to 3-day auc
+:type run_name: str (optional)</p>
+
+            <details class="quote">
+              <summary>Source code in <code>postpacu/main.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="c1"># It&#39;s evaluating the model.</span>
+<span class="k">def</span> <span class="nf">evaluate_model</span><span class="p">(</span>
+    <span class="n">run_id</span><span class="p">,</span>
+    <span class="n">args_fp</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;config/args.json&quot;</span><span class="p">,</span>
+    <span class="n">experiment_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;current candidate&quot;</span><span class="p">,</span>
+    <span class="n">run_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;3-day evaluation&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    It loads the model and data, and then evaluates the model on the data</span>
+
+<span class="sd">    :param run_id: The run_id of the model you want to evaluate</span>
+<span class="sd">    :param experiment_name: The name of the experiment you want to evaluate, defaults to current</span>
+<span class="sd">    candidate</span>
+<span class="sd">    :type experiment_name: str (optional)</span>
+<span class="sd">    :param run_name: The name of the run, defaults to 3-day auc</span>
+<span class="sd">    :type run_name: str (optional)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">load_config_dict</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">args_fp</span><span class="p">)</span>
+
+    <span class="n">experiment</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">set_experiment</span><span class="p">(</span><span class="n">experiment_name</span><span class="o">=</span><span class="n">experiment_name</span><span class="p">)</span>
+
+    <span class="n">utils</span><span class="o">.</span><span class="n">print_experiment_info</span><span class="p">(</span><span class="n">experiment</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">run_id</span><span class="p">:</span>
+        <span class="n">run_id</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">CONFIG_DIR</span><span class="p">,</span> <span class="s2">&quot;run_id.txt&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">preprocess</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">SCORECARD_DATA</span><span class="o">.</span><span class="n">absolute</span><span class="p">())</span>
+    <span class="c1"># Split ####</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data_splits</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_frac</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">TEST_SIZE</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">RANDOM_STATE</span>
+    <span class="p">)</span>
+    <span class="n">artifacts</span> <span class="o">=</span> <span class="n">load_artifacts</span><span class="p">(</span><span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">artifacts</span><span class="p">)</span>
+    <span class="n">numeric_vars</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">NUMERIC_VARIABLES</span>
+    <span class="c1"># get categorical and numeric vars</span>
+    <span class="n">categorical_variables</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">numeric_vars</span><span class="p">]</span>
+    <span class="c1"># Define the feature list from dataset (including categorical and numerical)</span>
+    <span class="n">list_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="c1"># Define selection criteria for BinningProcess</span>
+    <span class="n">selection_criteria</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;iv&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;iv_min&quot;</span><span class="p">],</span> <span class="s2">&quot;max&quot;</span><span class="p">:</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;iv_max&quot;</span><span class="p">],</span> <span class="s2">&quot;strategy&quot;</span><span class="p">:</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;iv_strategy&quot;</span><span class="p">]}</span>
+    <span class="p">}</span>
+    <span class="c1"># Instatiate BinningProcess</span>
+    <span class="n">binning_process</span> <span class="o">=</span> <span class="n">BinningProcess</span><span class="p">(</span>
+        <span class="n">categorical_variables</span><span class="o">=</span><span class="n">categorical_variables</span><span class="p">,</span>
+        <span class="n">variable_names</span><span class="o">=</span><span class="n">list_features</span><span class="p">,</span>
+        <span class="n">selection_criteria</span><span class="o">=</span><span class="n">selection_criteria</span><span class="p">,</span>
+        <span class="n">special_codes</span><span class="o">=</span><span class="p">[</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;special_code&quot;</span><span class="p">]],</span>
+    <span class="p">)</span>
+
+    <span class="c1"># get binned data</span>
+    <span class="n">X_train_binned</span> <span class="o">=</span> <span class="n">binning_process</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span>
+        <span class="n">X_train</span><span class="p">,</span>
+        <span class="n">y_train</span><span class="p">,</span>
+        <span class="n">sample_weight</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;binning_sample_weight&quot;</span><span class="p">],</span>
+        <span class="n">metric</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;binning_metric&quot;</span><span class="p">],</span>
+        <span class="n">metric_special</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;binning_metric_special&quot;</span><span class="p">],</span>
+        <span class="n">metric_missing</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;binning_metric_missing&quot;</span><span class="p">],</span>
+        <span class="n">show_digits</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;binning_show_digits&quot;</span><span class="p">],</span>
+        <span class="n">check_input</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;binning_check_input&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="n">X_test_binned</span> <span class="o">=</span> <span class="n">binning_process</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+        <span class="n">X_test</span><span class="p">,</span>
+        <span class="n">metric</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;binning_metric&quot;</span><span class="p">],</span>
+        <span class="n">metric_special</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;binning_metric_special&quot;</span><span class="p">],</span>
+        <span class="n">metric_missing</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;binning_metric_missing&quot;</span><span class="p">],</span>
+        <span class="n">show_digits</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;binning_show_digits&quot;</span><span class="p">],</span>
+        <span class="n">check_input</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;binning_check_input&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">(</span><span class="n">run_name</span><span class="o">=</span><span class="n">run_name</span><span class="p">):</span>
+        <span class="n">evaluate_sc</span> <span class="o">=</span> <span class="n">evaluate</span><span class="o">.</span><span class="n">get_scorecard_metrics</span><span class="p">(</span>
+            <span class="n">artifacts</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">],</span>
+            <span class="n">X_train</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span>
+            <span class="n">X_test</span><span class="o">=</span><span class="n">X_test</span><span class="p">,</span>
+            <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+            <span class="n">y_test</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">evaluate_sc</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+
+        <span class="n">evaluate_lr</span> <span class="o">=</span> <span class="n">evaluate</span><span class="o">.</span><span class="n">get_lr_metrics</span><span class="p">(</span>
+            <span class="n">lr_model</span><span class="o">=</span><span class="n">artifacts</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">estimator_</span><span class="p">,</span>
+            <span class="n">X_train_binned</span><span class="o">=</span><span class="n">X_test_binned</span><span class="p">,</span>
+            <span class="n">X_test_binned</span><span class="o">=</span><span class="n">X_test_binned</span><span class="p">,</span>
+            <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+            <span class="n">y_test</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span>
+            <span class="n">N_feat</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;N_top_features&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="postpacu.main.load_artifacts" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">load_artifacts</span><span class="p">(</span><span class="n">run_id</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Downloads the artifacts from the run with the given run_id, and returns a dictionary with the
+model, performance, and arguments</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>run_id</code></b>
+              –
+              <div class="doc-md-description">
+                <p>The run_id of the run you want to load.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              –
+              <div class="doc-md-description">
+                <p>A dictionary with the model, performance, and args</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>postpacu/main.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">load_artifacts</span><span class="p">(</span><span class="n">run_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Downloads the artifacts from the run with the given run_id, and returns a dictionary with the</span>
+<span class="sd">    model, performance, and arguments</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      run_id: The run_id of the run you want to load.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      A dictionary with the model, performance, and args</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">dp</span><span class="p">:</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">MlflowClient</span><span class="p">()</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">download_artifacts</span><span class="p">(</span><span class="n">run_id</span><span class="p">,</span> <span class="s2">&quot;scorecard_model.pkl&quot;</span><span class="p">,</span> <span class="n">dp</span><span class="p">)</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">download_artifacts</span><span class="p">(</span><span class="n">run_id</span><span class="p">,</span> <span class="s2">&quot;performance.json&quot;</span><span class="p">,</span> <span class="n">dp</span><span class="p">)</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">download_artifacts</span><span class="p">(</span><span class="n">run_id</span><span class="p">,</span> <span class="s2">&quot;args.json&quot;</span><span class="p">,</span> <span class="n">dp</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Scorecard</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="s2">&quot;scorecard_model.pkl&quot;</span><span class="p">)))</span>
+        <span class="n">performance</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_dict</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="s2">&quot;performance.json&quot;</span><span class="p">))</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_dict</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="s2">&quot;args.json&quot;</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;args&quot;</span><span class="p">:</span> <span class="n">args</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">model</span><span class="p">,</span> <span class="s2">&quot;performance&quot;</span><span class="p">:</span> <span class="n">performance</span><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="postpacu.main.load_config_dict" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">load_config_dict</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Load a dictionary from a JSON's filepath.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>filepath</code></b>
+              –
+              <div class="doc-md-description">
+                <p>The filepath to the JSON file.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              –
+              <div class="doc-md-description">
+                <p>A dictionary.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>postpacu/main.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">load_config_dict</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load a dictionary from a JSON&#39;s filepath.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      filepath: The filepath to the JSON file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      A dictionary.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="postpacu.main.load_data" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">load_data</span><span class="p">()</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <blockquote>
+<p>Load data from MS SQL</p>
+</blockquote>
+
+            <details class="quote">
+              <summary>Source code in <code>postpacu/main.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">load_data</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &gt; Load data from MS SQL</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Currently Dave provides query, and we run externally</span>
+    <span class="c1"># should this be done using a Python+SQL interface?</span>
+    <span class="c1"># Probably....</span>
+    <span class="c1"># submerge details in &quot;data&quot; module, and call something here like</span>
+    <span class="c1"># data.execute_sql() or data.pull()?</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="postpacu.main.optimize" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">optimize</span><span class="p">(</span><span class="n">args_fp</span><span class="o">=</span><span class="s1">&#39;config/args.json&#39;</span><span class="p">,</span> <span class="n">new_args_fp</span><span class="o">=</span><span class="s1">&#39;config/new_args.json&#39;</span><span class="p">,</span> <span class="n">experiment_name</span><span class="o">=</span><span class="s1">&#39;Optimize LR&#39;</span><span class="p">,</span> <span class="n">run_name</span><span class="o">=</span><span class="s1">&#39;en cv&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <blockquote>
+<p>Optimize the hyperparameters of the ElasticNet model using the <code>train.optimize_lr</code> function</p>
+</blockquote>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>args_fp</code></b>
+                  (<code>str</code>, default:
+                      <code>&#39;config/args.json&#39;</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Path to args file. Defaults to configs/args.json</p>
+              </div>
+            </li>
+            <li>
+              <b><code>new_args_fp</code></b>
+                  (<code>str</code>, default:
+                      <code>&#39;config/new_args.json&#39;</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Where to store best model parameters. Defaults to</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>        <p>configs/new_candidate_args.json
+  experiment_name (str): MLFlow experiment name. Defaults to Optimize LR
+  run_name (str): MLFlow run name. Defaults to en cv</p>
+
+            <details class="quote">
+              <summary>Source code in <code>postpacu/main.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span>
+    <span class="n">args_fp</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;config/args.json&quot;</span><span class="p">,</span>
+    <span class="n">new_args_fp</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;config/new_args.json&quot;</span><span class="p">,</span>
+    <span class="n">experiment_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Optimize LR&quot;</span><span class="p">,</span>
+    <span class="n">run_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;en cv&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &gt; Optimize the hyperparameters of the ElasticNet model using the `train.optimize_lr` function</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      args_fp (str): Path to args file. Defaults to configs/args.json</span>
+<span class="sd">      new_args_fp (str): Where to store best model parameters. Defaults to</span>
+<span class="sd">    configs/new_candidate_args.json</span>
+<span class="sd">      experiment_name (str): MLFlow experiment name. Defaults to Optimize LR</span>
+<span class="sd">      run_name (str): MLFlow run name. Defaults to en cv</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># load data</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">preprocess</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">SCORECARD_DATA</span><span class="o">.</span><span class="n">absolute</span><span class="p">())</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span><span class="o">**</span><span class="n">utils</span><span class="o">.</span><span class="n">load_dict</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">args_fp</span><span class="p">))</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">set_experiment</span><span class="p">(</span><span class="n">experiment_name</span><span class="o">=</span><span class="n">experiment_name</span><span class="p">)</span>
+    <span class="n">experiment</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">set_experiment</span><span class="p">(</span><span class="n">experiment_name</span><span class="o">=</span><span class="n">experiment_name</span><span class="p">)</span>
+    <span class="n">utils</span><span class="o">.</span><span class="n">print_experiment_info</span><span class="p">(</span><span class="n">experiment</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">autolog</span><span class="p">()</span>
+    <span class="c1"># optimize</span>
+    <span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">(</span><span class="n">run_name</span><span class="o">=</span><span class="n">run_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">run</span><span class="p">:</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">print_run_info</span><span class="p">(</span><span class="n">run</span><span class="p">)</span>
+        <span class="n">opt_model</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">coef_table</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">optimize_lr</span><span class="p">(</span>
+            <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">numeric_vars</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">NUMERIC_VARIABLES</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">TEST_SIZE</span>
+        <span class="p">)</span>
+
+        <span class="n">best_args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="n">opt_model</span><span class="o">.</span><span class="n">C_</span><span class="p">,</span> <span class="s2">&quot;l1_ratio&quot;</span><span class="p">:</span> <span class="n">opt_model</span><span class="o">.</span><span class="n">l1_ratio_</span><span class="p">}</span>
+        <span class="n">mlflow</span><span class="o">.</span><span class="n">log_params</span><span class="p">(</span><span class="n">best_args</span><span class="p">)</span>
+        <span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span><span class="n">opt_model</span><span class="p">,</span> <span class="s2">&quot;EN CV&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">dp</span><span class="p">:</span>
+            <span class="n">coef_table</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="s2">&quot;coefs.csv&quot;</span><span class="p">))</span>
+            <span class="n">mlflow</span><span class="o">.</span><span class="n">log_artifacts</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
+
+    <span class="c1"># tutorial automatically overwrites args_fp</span>
+    <span class="c1"># I think a human should manually do this</span>
+    <span class="c1"># unless we&#39;re building a continuously learning</span>
+    <span class="c1"># or auto-updating model, so instead</span>
+    <span class="c1"># make a json file with name new_args_fp</span>
+    <span class="n">utils</span><span class="o">.</span><span class="n">save_dict</span><span class="p">({</span><span class="o">**</span><span class="n">best_args</span><span class="p">},</span> <span class="n">new_args_fp</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">NumpyEncoder</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;✅ LR Model optimized. Best parameters in new_args_fp.&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="postpacu.main.predict_risk" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">predict_risk</span><span class="p">(</span><span class="n">new_X</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>It loads the artifacts from the run_id, and then uses the predict function to make a prediction.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>new_X</code></b>
+                  (<code><span title="pd.DataFrame">DataFrame</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>a pandas dataframe with the same columns as the training data</p>
+              </div>
+            </li>
+            <li>
+              <b><code>run_id</code></b>
+              –
+              <div class="doc-md-description">
+                <p>The run_id of the model you want to use to make predictions.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              –
+              <div class="doc-md-description">
+                <p>A list of dictionaries, each containing the input data and the predicted probability.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>postpacu/main.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">predict_risk</span><span class="p">(</span><span class="n">new_X</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    It loads the artifacts from the run_id, and then uses the predict function to make a prediction.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      new_X (pd.DataFrame): a pandas dataframe with the same columns as the training data</span>
+<span class="sd">      run_id: The run_id of the model you want to use to make predictions.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      A list of dictionaries, each containing the input data and the predicted probability.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># need to think about the best way to get new_X in there. Excel?</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">run_id</span><span class="p">:</span>
+        <span class="n">run_id</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">CONFIG_DIR</span><span class="p">,</span> <span class="s2">&quot;run_id.txt&quot;</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">artifacts</span> <span class="o">=</span> <span class="n">load_artifacts</span><span class="p">(</span><span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">)</span>
+    <span class="n">prediction</span> <span class="o">=</span> <span class="n">predict</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">new_X</span><span class="p">,</span> <span class="n">artifacts</span><span class="o">=</span><span class="n">artifacts</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">prediction</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="postpacu.main.train_model" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">train_model</span><span class="p">(</span><span class="n">args_fp</span><span class="o">=</span><span class="s1">&#39;config/args.json&#39;</span><span class="p">,</span> <span class="n">experiment_name</span><span class="o">=</span><span class="s1">&#39;current candidate&#39;</span><span class="p">,</span> <span class="n">run_name</span><span class="o">=</span><span class="s1">&#39;en no cv&#39;</span><span class="p">,</span> <span class="n">test_run</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p><code>train_model</code> takes a json file with model parameters, and trains a model with those parameters, and
+logs the model and performance metrics to mlflow</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>args_fp</code></b>
+                  (<code>str</code>, default:
+                      <code>&#39;config/args.json&#39;</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Path to args file. Defaults to configs/args.json</p>
+              </div>
+            </li>
+            <li>
+              <b><code>experiment_name</code></b>
+                  (<code>str</code>, default:
+                      <code>&#39;current candidate&#39;</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>MLFlow experiment name. Defaults to current candidate</p>
+              </div>
+            </li>
+            <li>
+              <b><code>run_name</code></b>
+                  (<code>str</code>, default:
+                      <code>&#39;en no cv&#39;</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>MLFlow run name. Defaults to en no cv</p>
+              </div>
+            </li>
+            <li>
+              <b><code>test_run</code></b>
+                  (<code>bool</code>, default:
+                      <code>False</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Disable MLFlow?. Defaults to False</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>postpacu/main.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span>
+    <span class="n">args_fp</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;config/args.json&quot;</span><span class="p">,</span>
+    <span class="n">experiment_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;current candidate&quot;</span><span class="p">,</span>
+    <span class="n">run_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;en no cv&quot;</span><span class="p">,</span>
+    <span class="n">test_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    `train_model` takes a json file with model parameters, and trains a model with those parameters, and</span>
+<span class="sd">    logs the model and performance metrics to mlflow</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      args_fp (str): Path to args file. Defaults to configs/args.json</span>
+<span class="sd">      experiment_name (str): MLFlow experiment name. Defaults to current candidate</span>
+<span class="sd">      run_name (str): MLFlow run name. Defaults to en no cv</span>
+<span class="sd">      test_run (bool): Disable MLFlow?. Defaults to False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># r-cleaned data</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">preprocess</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">SCORECARD_DATA</span><span class="o">.</span><span class="n">absolute</span><span class="p">())</span>
+
+    <span class="c1"># Train</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span><span class="o">**</span><span class="n">utils</span><span class="o">.</span><span class="n">load_dict</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">args_fp</span><span class="p">))</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">set_experiment</span><span class="p">(</span><span class="n">experiment_name</span><span class="o">=</span><span class="n">experiment_name</span><span class="p">)</span>
+    <span class="n">experiment</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">set_experiment</span><span class="p">(</span><span class="n">experiment_name</span><span class="o">=</span><span class="n">experiment_name</span><span class="p">)</span>
+    <span class="n">utils</span><span class="o">.</span><span class="n">print_experiment_info</span><span class="p">(</span><span class="n">experiment</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">(</span><span class="n">run_name</span><span class="o">=</span><span class="n">run_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">run</span><span class="p">:</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">print_run_info</span><span class="p">(</span><span class="n">run</span><span class="p">)</span>
+        <span class="n">run_id</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">active_run</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span>
+        <span class="c1"># madewithml tutorial makes and logs all artifacts in main,</span>
+        <span class="c1"># but if you&#39;re making plots, it seems like that should be in</span>
+        <span class="c1"># train.py, so that&#39;s how I did it here. -RM</span>
+        <span class="n">artifacts</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+            <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+            <span class="n">numeric_vars</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">NUMERIC_VARIABLES</span><span class="p">,</span>
+            <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span>
+            <span class="n">trial</span><span class="o">=</span><span class="n">test_run</span><span class="p">,</span>
+            <span class="n">test_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">TEST_SIZE</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">performance</span> <span class="o">=</span> <span class="n">artifacts</span><span class="p">[</span><span class="s2">&quot;performance&quot;</span><span class="p">]</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">artifacts</span><span class="p">[</span><span class="s2">&quot;scorecard_model&quot;</span><span class="p">]</span>
+        <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">dp</span><span class="p">:</span>
+            <span class="n">utils</span><span class="o">.</span><span class="n">save_dict</span><span class="p">(</span><span class="n">performance</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="s2">&quot;performance.json&quot;</span><span class="p">))</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="s2">&quot;scorecard_model.pkl&quot;</span><span class="p">)))</span>
+            <span class="n">mlflow</span><span class="o">.</span><span class="n">log_artifact</span><span class="p">(</span><span class="n">args_fp</span><span class="p">)</span>
+            <span class="n">mlflow</span><span class="o">.</span><span class="n">log_artifacts</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">performance</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+
+    <span class="c1"># Save to config</span>
+    <span class="nb">open</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">CONFIG_DIR</span><span class="p">,</span> <span class="s2">&quot;run_id.txt&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">run_id</span><span class="p">)</span>
+    <span class="n">utils</span><span class="o">.</span><span class="n">save_dict</span><span class="p">(</span><span class="n">performance</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">CONFIG_DIR</span><span class="p">,</span> <span class="s2">&quot;performance.json&quot;</span><span class="p">))</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;✅ Model trained with fixed parameters in args.&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../.." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../data/" class="btn btn-neutral float-right" title="data">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/UABPeriopAI/post-pacu-uce" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../.." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../data/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

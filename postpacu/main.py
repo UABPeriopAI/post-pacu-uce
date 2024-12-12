@@ -20,6 +20,7 @@ from postpacu import data, evaluate, predict, train, utils
 app = typer.Typer()
 warnings.filterwarnings("ignore")
 
+
 def load_config_dict(filepath):
     """
     Load a dictionary from a JSON's filepath.
@@ -34,6 +35,7 @@ def load_config_dict(filepath):
     with open(filepath, "r") as fp:
         d = json.load(fp)
     return d
+
 
 @app.command()
 def load_data():
