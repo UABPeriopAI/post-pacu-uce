@@ -21,6 +21,6 @@ setup(
     author_email="rmelvin@uabmc.edu",
     python_requires=">=3.8",
     packages=find_namespace_packages(),
-    install_requires=[required_packages],
+    install_requires=required_packages,
     extras_require={"dev": docs_packages + style_packages, "docs": docs_packages},
 )

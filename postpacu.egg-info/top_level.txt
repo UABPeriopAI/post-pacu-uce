@@ -1,7 +1,0 @@
-Docker
-config
-data
-docs
-llm_utils
-postpacu
-site
