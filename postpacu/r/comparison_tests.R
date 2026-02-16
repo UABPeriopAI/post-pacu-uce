@@ -1,4 +1,9 @@
-source("GeneralStore/StatisticalAnalysis/compare_means.R")
+source_dir = if (!is.null(sys.frame(1)$ofile)) {
+    dirname(sys.frame(1)$ofile)
+} else {
+    getwd()
+}
+source(file.path(source_dir, "compare_means.R"))
 
 compare_groups = function(chi_squared_vars, ttests_vars, data, y){
     # Chi-squared tests

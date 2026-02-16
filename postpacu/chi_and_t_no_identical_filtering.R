@@ -2,7 +2,9 @@
 library(car)
 library(dplyr)
 library(readxl)
-source("/workspaces/WagenerPostPACU/GeneralStore/StatisticalAnalysis/comparison_tests.R")
+script_dir = dirname(sys.frame(1)$ofile)
+repo_root = normalizePath(file.path(script_dir, ".."))
+source(file.path(repo_root, "postpacu", "r", "comparison_tests.R"))
 
 # get args from command line 
 myargs = commandArgs(trailingOnly=TRUE)
