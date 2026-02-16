@@ -1,12 +1,15 @@
 # Post-PACU Escalation Prediction
 
-This project aims to predict escalations of care after Post-Anesthesia Care Unit (PACU) discharge using patient demographics, medical histories, and intra-PACU signals. An escalation of care is defined as any of the following events occurring within three midnights of PACU discharge:
+This project aims to predict escalations of care after Post-Anesthesia Care Unit (PACU) discharge
+using patient demographics, medical histories, and intra-PACU signals. An escalation of care is
+defined as any of the following events occurring within three midnights of PACU discharge:
 
 - **Medical Emergency Team (MET) call**
 - **Unplanned Intensive Care Unit (ICU) admission**
 - **Unplanned transfer from general care to step-down unit**
 
-The model leverages an elastic-net-regularized logistic regression and utilizes the `optbinning` package to create a scorecard for risk prediction.
+The model leverages an elastic-net-regularized logistic regression and utilizes the `optbinning`
+package to create a scorecard for risk prediction.
 
 ## Table of Contents
 
@@ -36,26 +39,33 @@ Patients discharged from the PACU may experience unexpected deteriorations requi
 ## Project Structure
 
 ```plaintext
+├── .devcontainer/          # Devcontainer definition (Dockerfile + VS Code config)
+├── Docker/                 # Container startup scripts
+├── config/                 # Runtime configuration and args JSON
 ├── data/                   # Data files (not included)
-├── notebooks/              # Jupyter notebooks for exploratory analysis
-├── src/                    # Source code for the project
-│   ├── config/             # Configuration files
-│   ├── postpacu/           # Main package
-│   ├── tests/              # Unit tests
-│   └── README.md           # Additional documentation
-├── README.md               # Project overview (this file)
-├── setup.py                # Installation script
-└── requirements.txt        # Python dependencies
+├── docs/                   # MkDocs sources and data dictionary
+├── llm_utils/              # Shared utilities (vendored dependency)
+├── postpacu/               # Main package and R entrypoints
+│   ├── r/                   # R utilities for statistical tests
+│   ├── preprocess_data.R    # R-based preprocessing
+│   └── main.py              # Typer CLI entrypoint
+├── site/                   # Generated MkDocs site output
+├── mkdocs.yml              # MkDocs configuration
+├── pyproject.toml          # Tooling configuration
+├── requirements.txt        # Python dependencies
+├── setup.py                # Package metadata / install
+└── README.md               # Project overview (this file)
 ```
 
 ## Getting Started
 
 ### Prerequisites
 
-- **Python 3.7+**
+- **Python 3.11+**
 - **pip** (Python package installer)
-- **R** (for initial data cleaning)
-  - Ensure that required R packages are installed.
+- **R** (for data cleaning and statistical tests)
+  - Install required R packages (see `docs/packages.sh`).
+- **Docker** (optional, for devcontainer workflow)
 
 ### Installation
 
@@ -77,10 +87,9 @@ source venv/bin/activate
 
 #### Install Package Dependencies
 
-Navigate to the `src/` directory and install the package:
+Install from the repository root:
 
 ```bash
-cd src
 pip install --upgrade pip setuptools wheel
 pip install -e .
 ```
@@ -90,6 +99,12 @@ For development (includes additional dependencies for testing and code quality):
 ```bash
 pip install -e ".[dev]"
 ```
+
+### Devcontainer (Optional)
+
+This repository includes a `.devcontainer/` setup. In VS Code, use
+`Dev Containers: Reopen in Container` to build the environment. The container
+bootstraps Python dependencies and R packages via `Docker/startup.sh`.
 
 ### Data Preparation
 
@@ -139,7 +154,7 @@ main.optimize(args_fp)
 ```bash
 python postpacu/main.py optimize \
     --args-fp="config/args.json" \
-    --new-args-fp="config/optimized_args.json" \
+    --new-args-fp="config/new_args.json" \
     --experiment-name="optimization" \
     --run-name="elasticnet_optimization"
 ```
@@ -164,24 +179,58 @@ risk_scores = main.predict_risk(new_X)
 
 ```bash
 python postpacu/main.py predict-risk \
-    --new-X="path/to/new_observations.csv" \
-    --output="path/to/risk_scores.csv"
+    --new-X="path/to/new_observations.csv"
 ```
 
-*Ensure that `new_X` matches the expected input format of the model. This typically includes the same features used during training.*
+*Note: The CLI currently accepts `new_X` as a raw argument. It does not yet load a CSV automatically,
+so you will likely want to use the Python API for now.*
+
+### Cleaning Data (R)
+
+```bash
+python postpacu/main.py clean-data
+```
+
+### Comparison Tests (R)
+
+```bash
+python postpacu/main.py get-comparison-tests
+```
+
+### CLI Reference
+
+All CLI commands are implemented in `postpacu/main.py` via Typer:
+
+1. `load-data` (Not implemented)
+1. `clean-data` Run the R preprocessing pipeline.
+1. `train-model` Train the scorecard model and log artifacts to MLflow.
+1. `optimize` Hyperparameter search for ElasticNet; writes `config/new_args.json`.
+1. `predict-risk` Predict risk for a provided dataframe (best via Python API).
+1. `get-comparison-tests` Run chi-squared and t-tests and save results.
+
+### Data Paths
+
+Data locations are configured in `config/config.py` and default to `/data/DATASCI`:
+
+1. Raw data: `/data/DATASCI/raw/EscalationsAt3Days.xlsx`
+1. Intermediate outputs: `/data/DATASCI/intermediate/`
+1. Results: `/data/DATASCI/results/`
+
+If you are not using the shared `/data` volume, update the paths in
+`config/config.py` to match your local environment.
 
 ## Development
 
 ### Running Tests
 
-```bash
-pytest tests/
-```
+There is no automated test suite in this repository yet.
 
 ### Code Style and Linting
 
 ```bash
-flake8 src/
+black --check .
+isort --check-only .
+autopep8 --diff -a -a .
 ```
 
 ### Building Documentation

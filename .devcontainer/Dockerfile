@@ -12,7 +12,8 @@ RUN if [ "${NODE_VERSION}" != "none" ]; then \
     fi
 
 # [Optional] Uncomment this section to install additional OS packages.
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+RUN rm -f /etc/apt/sources.list.d/yarn.list \
+    && apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends sqlite3 \
     && apt-get -y install --no-install-recommends git-flow \
     && apt-get -y install --no-install-recommends mkdocs \

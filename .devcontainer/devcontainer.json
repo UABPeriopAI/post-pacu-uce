@@ -38,7 +38,6 @@
 				"ms-python.python",
 				"ms-python.vscode-pylance",
 				"teledemic.branch-warnings",
-				"mintlify.document",
 				"grapecity.gc-excelviewer" 
 			]
 		}
