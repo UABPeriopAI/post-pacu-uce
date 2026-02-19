@@ -34,6 +34,8 @@ def r_clean_data(configuration=config) -> None:
     """
     # this is so specific to this project,
     # I think it's ok to just have the input be "config"
+    configuration.INTERMEDIATE_DATA.mkdir(parents=True, exist_ok=True)
+    configuration.RESULTS.mkdir(parents=True, exist_ok=True)
     rscript_path = Path(configuration.BASE_DIR, "postpacu/preprocess_data.R")
     subprocess.call(
         [
@@ -119,6 +121,7 @@ def py_clean_data(data_path: Path):
     other_escalations = pd.DataFrame(
         {"pt_idx": X.index, "MET": y_MET, "ICU": y_ICU, "stepdown": y_stepdown}
     )
+    config.INTERMEDIATE_DATA.mkdir(parents=True, exist_ok=True)
     other_escalations.to_csv(Path(config.INTERMEDIATE_DATA, "other_escalations.csv"))
     logger.info("Other escalation types saved to intermediate data path.")
     return X, y

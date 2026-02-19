@@ -1,6 +1,0 @@
-Docker
-GeneralStore
-config
-data
-docs
-postpacu
